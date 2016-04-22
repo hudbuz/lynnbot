@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<h1>Update Your Availability</h1>
+
+
+<form action="/tutors/<%=@tutor.id%>/edit_schedule" method="POST">
+      <input id="hidden" type="hidden" name="_method" value="PATCH">
+<label>Monday: <br><input type="checkbox" name="edit[monday][9:00]" value="true">  9:00am</input><br>
+               <input type="checkbox" name="edit[monday][12:00]" value="true">  12:00pm</input><br>
+               <input type="checkbox" name="edit[monday][2:00]" value="true">  2:00pm</input><br>
+               <input type="checkbox" name="edit[monday][5:00]" value="true">  5:00pm</input><br>
+</label>
+
+<label>Tuesday: <br><input type="checkbox" name="edit[tuesday][9:00]" value="true">  9:00am</input><br>
+               <input type="checkbox" name="edit[tuesday][12:00]" value="true">  12:00pm</input><br>
+               <input type="checkbox" name="edit[tuesday][2:00]" value="true">  2:00pm</input><br>
+               <input type="checkbox" name="edit[tuesday][5:00]" value="true">  5:00pm</input><br>
+</label>
+
+<label>Wednesday: <br><input type="checkbox" name="edit[wednesday][9:00]" value="true">  9:00am</input><br>
+               <input type="checkbox" name="edit[wednesday][12:00]" value="true">  12:00pm</input><br>
+               <input type="checkbox" name="edit[wednesday][2:00]" value="true">  2:00pm</input><br>
+               <input type="checkbox" name="edit[wednesday][5:00]" value="true">  5:00pm</input><br>
+</label>
+
+<label>Thursday: <br><input type="checkbox" name="edit[thursday][9:00]" value="true">  9:00am</input><br>
+               <input type="checkbox" name="edit[thursday][12:00]" value="true">  12:00pm</input><br>
+               <input type="checkbox" name="edit[thursday][2:00]" value="true">  2:00pm</input><br>
+               <input type="checkbox" name="edit[thursday][5:00]" value="true">  5:00pm</input><br>
+</label>
+
+<label>Friday: <br><input type="checkbox" name="edit[friday][9:00]" value="true">  9:00am</input><br>
+               <input type="checkbox" name="edit[friday][12:00]" value="true">  12:00pm</input><br>
+               <input type="checkbox" name="edit[friday][2:00]" value="true">  2:00pm</input><br>
+               <input type="checkbox" name="edit[friday][5:00]" value="true">  5:00pm</input><br>
+</label>
+<input type="submit" value="Create Schedule">
+</form>
+
+
+<a href="/logout">Logout</a>
+
+</body>
+</html>
+
