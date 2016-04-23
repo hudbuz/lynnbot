@@ -98,7 +98,7 @@ class TutorController < ApplicationController
     @tutor = Tutor.find(params[:id])
     Availability.delete_all(tutor_id: @tutor.id)
     binding.pry
-    params.each do |key,value|
+    params[:edit].each do |key,value|
       value.each do |time|
         Availability.create(day: key, time: time[0], tutor_id: session[:tutor_id])
       end

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<h1>Book Appointments</h1>
+<form action="/students/<%=@student.id%>/book" method="POST">
+  <% @openings.each do |opening|%>
+    <input type="checkbox" name="appointments[<%=opening.day%>][<%=opening.time%>]" value="<%=Tutor.find(opening.tutor_id).id%>"><%= opening.day.capitalize + ", " + opening.time + "- " + Tutor.find(opening.tutor_id).name%></input><br>
+    <%end%>
+    <input type="submit" value="Book Appointment">
+  </form>
+
+
+
+
+</body>
+</html>
+
