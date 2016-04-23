@@ -14,9 +14,12 @@
 <% @appointments.each do |x| %>
 <%= x.day.capitalize + " " + x.time + " - " + Tutor.find(x.tutor_id).name.capitalize %><br>
 <%end%>
+<br><br>
 
-<a href="/students/<%=@student.id%>/book">Book Sessions</a><br><br>
-<a href="/logout">Logout</a>
+<a href="/students/<%=@student.id%>/cancel">Cancel Session</a>
+
+<br><br><br><br>
+<a href="/students/<%=@student.id%>/book">Book Sessions</a>     <a href="/logout">Logout</a>
 </body>
 </html>
 

@@ -56,6 +56,7 @@ class TutorController < ApplicationController
     redirect '/' if !logged_in?
 
     @tutor = Tutor.find(session[:tutor_id])
+     @appointments = Appointment.where(tutor_id: session[:tutor_id])
     erb :'/tutors/view_schedule'
   end
 

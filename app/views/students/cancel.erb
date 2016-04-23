@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cancel Session </title>
+</head>
+<body>
+
+<h1>Cancel Appointments</h1>
+<form action="/students/<%=@student.id%>/cancel" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="PATCH">
+  <% @appointments.each do |opening|%>
+    <input type="checkbox" name="appointments[<%=opening.day%>][<%=opening.time%>]" value="<%=Tutor.find(opening.tutor_id).id%>"><%= opening.day.capitalize + ", " + opening.time + "- " + Tutor.find(opening.tutor_id).name%></input><br>
+    <%end%>
+    <input type="submit" value="Cancel Appointment">
+  </form>
+
+
+
+
+</body>
+</html>
+

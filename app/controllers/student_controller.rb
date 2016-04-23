@@ -56,7 +56,7 @@ class StudentController < ApplicationController
     redirect '/' if params[:id] != current_user.id.to_s
     @student = Student.find(params[:id])
     @appointments = Appointment.where(student_id: session[:student_id])
-    binding.pry
+ 
 
 
 
@@ -67,7 +67,7 @@ class StudentController < ApplicationController
     redirect '/' if !logged_in?
     redirect '/' if params[:id] != current_user.id.to_s
     @student = Student.find(params[:id])
-    binding.pry
+
     @openings = Availability.all
 
     erb :'/students/book'
@@ -93,6 +93,33 @@ class StudentController < ApplicationController
 
     redirect "/students/#{session[:student_id]}/view"
 
+  end
+
+  get '/students/:id/cancel' do
+    redirect '/' if !logged_in?
+    redirect '/' if params[:id] != current_user.id.to_s
+    @student = Student.find(session[:student_id])
+    @appointments = Appointment.where(student_id: session[:student_id])
+
+    erb :'/students/cancel'
+  end
+
+  patch '/students/:id/cancel' do 
+    appointments = params[:appointments] 
+    appointments.each do |key,value|
+      value.each do |keys,values|
+        Appointment.delete_all(student_id: session[:student_id], tutor_id: values, day: key, time: keys)
+      end
+    end
+
+    appointments.each do |key,value|
+      value.each do |keys,values|
+        Availability.create(tutor_id: values, day: key, time: keys)
+      end
+    end
+
+
+    redirect "students/#{session[:student_id]}/view"
   end
 
 
