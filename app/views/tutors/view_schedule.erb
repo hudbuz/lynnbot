@@ -13,7 +13,7 @@
 
 <h2><%=@tutor.name.capitalize%>'s Booked Sessions</h2>
 <% @appointments.each do |x| %>
-<%= x.day.capitalize + " " + x.time + " - " + Student.find(x.student_id).name.capitalize %><br>
+<%= x.day.capitalize + " " + x.time + " - " + Student.find(x.student_id).name.capitalize %><br><br><br>
 <%end%>
 
 <a href="/tutors/<%=@tutor.id%>/edit_schedule">Update Availability</a><br><br>

@@ -8,7 +8,11 @@
 <h1>Set Your Availability</h1>
 
 
-<form action="/tutors/schedule" method="POST">
+  <% unless locals.empty? %>
+  <%= message %>
+  <% end %><br>
+
+<form action="/tutors/<%@tutor.id%>/schedule" method="POST">
 <label>Monday: <br><input type="checkbox" name="monday[9:00]" value="true">  9:00am</input><br>
                <input type="checkbox" name="monday[12:00]" value="true">  12:00pm</input><br>
                <input type="checkbox" name="monday[2:00]" value="true">  2:00pm</input><br>

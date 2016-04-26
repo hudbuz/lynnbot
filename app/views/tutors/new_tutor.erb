@@ -12,6 +12,10 @@
   <label>Password:<input type="password" name="password" id="password"><br></label>
   <input type="submit" value="Start Tutoring!">
 </form>
+<% unless locals.empty? %>
+  <%= message %>
+<% end %>
+
 
 
 </body>

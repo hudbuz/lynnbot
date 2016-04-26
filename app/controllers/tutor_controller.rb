@@ -14,11 +14,15 @@ class TutorController < ApplicationController
    
 
       if params[:username] == "" 
-        redirect '/tutors/signup'
+        erb :'/tutors/new_tutor', locals: {message: "You must enter a username."}
       elsif params[:password] == ""
-        redirect '/tutors/signup'
+        erb :'/tutors/new_tutor', locals: {message: "You must enter a password."}
+
       elsif params[:name] == ""
-        redirect '/tutors/signup'
+        erb :'/tutors/new_tutor', locals: {message: "You must enter a name."}
+        binding.pry
+      elsif Tutor.all.find_by(username: params[:username])
+        erb :'/students/new_student', locals: {message: "Username already taken."}
       else
         @tutor = Tutor.create(username: params[:username], password: params[:password], name: params[:name])
         if @tutor.save
@@ -40,13 +44,13 @@ class TutorController < ApplicationController
   
     @tutor = Tutor.find_by(username:  params[:username])
     if params[:username] == "" || params[:password] == ""
-      redirect '/tutors/login'
+      erb :'/tutors/tutor_login', locals: {message: "You must enter a username and a password."}
     elsif @tutor && @tutor.authenticate(params[:password])
  
       session[:tutor_id] = @tutor.id 
       redirect "/tutors/#{@tutor.id}/view"
     else
-      redirect '/tutors/login'
+      erb :'/tutors/tutor_login', locals: {message: "You must enter a valid username and a password."}
     end
   end
 
@@ -61,25 +65,32 @@ class TutorController < ApplicationController
   end
 
   get '/tutors/:id/schedule' do 
-    redirect '/' if params[:id] != current_user.id.to_s
     redirect '/' if !logged_in?
+    redirect '/' if params[:id] != current_user.id.to_s
+    @tutor = Tutor.find(session[:tutor_id])
     erb :'tutors/make_schedule' 
   end
 
-  post '/tutors/schedule' do 
+  post '/tutors/:id/schedule' do 
     redirect '/' if !logged_in?
-
+    redirect '/' if params[:id] != current_user.id.to_s
     @tutor = Tutor.find(session[:tutor_id])
 
+    if params == {}
+      erb :"tutors/make_schedule", locals: {message: "You need to list at least 1 availability if you tryna work.  "}
+    else
+      @tutor = Tutor.find(session[:tutor_id])
 
-    params.each do |key,value|
-      value.each do |time|
-        Availability.create(day: key, time: time[0], tutor_id: session[:tutor_id])
+
+      params.each do |key,value|
+        value.each do |time|
+          Availability.create(day: key, time: time[0], tutor_id: session[:tutor_id])
+        end
+
+        
       end
-
-      
-    end
-     redirect "/tutors/#{@tutor.id}/view"
+       redirect "/tutors/#{@tutor.id}/view"
+     end
   end
 
   get '/tutors/:id/edit_schedule' do 
@@ -94,20 +105,25 @@ class TutorController < ApplicationController
   patch '/tutors/:id/edit_schedule' do 
     redirect '/' if !logged_in?
     redirect '/' if params[:id] != current_user.id.to_s
-
-    
     @tutor = Tutor.find(params[:id])
-    Availability.delete_all(tutor_id: @tutor.id)
-    binding.pry
-    params[:edit].each do |key,value|
-      value.each do |time|
-        Availability.create(day: key, time: time[0], tutor_id: session[:tutor_id])
+
+    if params[:edit] == nil
+      erb :"/tutors/edit_schedule", locals: {message: "You need to list at least 1 availability if you tryna work.  "}
+    else
+
+      @tutor = Tutor.find(params[:id])
+      Availability.delete_all(tutor_id: @tutor.id)
+      binding.pry
+      params[:edit].each do |key,value|
+        value.each do |time|
+          Availability.create(day: key, time: time[0], tutor_id: session[:tutor_id])
+        end
+
       end
 
+
+      redirect "/tutors/#{@tutor.id}/view"
     end
-
-
-    redirect "/tutors/#{@tutor.id}/view"
   end
 
 

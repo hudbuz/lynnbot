@@ -10,7 +10,11 @@
   <label>Name:<input type="text" name="name" id="name"><br></label>
   <label>Username:<input type="text" name="username" id="username"><br></label>
   <label>Password:<input type="password" name="password" id="password"><br></label>
-  <input type="submit" value="Start throwing away money!">
+  <input type="submit" value="Start throwing away money!"><br>
+  <% unless locals.empty? %>
+  <%= message %>
+  <% end %>
+
 </form>
 
 

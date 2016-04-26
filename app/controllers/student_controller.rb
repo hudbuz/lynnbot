@@ -12,11 +12,13 @@ class StudentController < ApplicationController
    
 
       if params[:username] == "" 
-        redirect '/students/signup'
+        erb :'/students/new_student', locals: {message: "You must enter a username."}
       elsif params[:password] == ""
-        redirect '/students/signup'
+        erb :'/students/new_student', locals: {message: "You must enter a password."}
       elsif params[:name] == ""
-        redirect '/students/signup'
+        erb :'/students/new_student', locals: {message: "You must enter a name."}
+      elsif Student.all.find_by(username: params[:username])
+        erb :'/students/new_student', locals: {message: "Username already taken."}
       else
         @student = Student.create(username: params[:username], password: params[:password], name: params[:name])
         if @student.save
@@ -39,13 +41,13 @@ class StudentController < ApplicationController
   
     @student = Student.find_by(username:  params[:username])
     if params[:username] == "" || params[:password] == ""
-      redirect '/students/login'
+      erb :'/students/student_login', locals: {message: "You must enter a username and a password."}
     elsif @student && @student.authenticate(params[:password])
  
       session[:student_id] = @student.id 
       redirect "/students/#{@student.id}/view"
     else
-      redirect '/students/login'
+      erb :'/students/student_login', locals: {message: "You must enter a valid username and password."}
     end
   end
 
@@ -99,12 +101,14 @@ class StudentController < ApplicationController
     redirect '/' if !logged_in?
     redirect '/' if params[:id] != current_user.id.to_s
     @student = Student.find(session[:student_id])
-    @appointments = Appointment.where(student_id: session[:student_id])
+    @appointments = Appointment.where(student_id: session[:student_id]).order_by(tutor_id)
 
     erb :'/students/cancel'
   end
 
   patch '/students/:id/cancel' do 
+    redirect '/' if !logged_in?
+    redirect '/' if params[:id] != current_user.id.to_s
     appointments = params[:appointments] 
     appointments.each do |key,value|
       value.each do |keys,values|

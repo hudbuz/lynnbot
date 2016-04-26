@@ -7,6 +7,13 @@
 
 <h1>Update Your Availability</h1>
 
+ <% unless locals.empty? %>
+  <%= message %>
+  <% end %><br>
+
+
+  <h3>Warning: Updating availability will not cancel previously booked sessions.</h3>
+
 
 <form action="/tutors/<%=@tutor.id%>/edit_schedule" method="POST">
       <input id="hidden" type="hidden" name="_method" value="PATCH">
@@ -41,6 +48,8 @@
 </label>
 <input type="submit" value="Update Schedule">
 </form>
+
+
 
 
 <a href="/logout">Logout</a>

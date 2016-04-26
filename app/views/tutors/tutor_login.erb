@@ -11,6 +11,10 @@
   <label>Password:<input type="password" name="password" id="password:"></label><br>
   <input type="submit" id="submit" value="Log In">
 </form>
+<% unless locals.empty? %>
+  <%= message %>
+<% end %>
+
 
 <h4>First time tutoring? Start <a href="signup">Now!</a></h4>
 
