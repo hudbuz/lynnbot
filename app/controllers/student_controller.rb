@@ -101,7 +101,7 @@ class StudentController < ApplicationController
     redirect '/' if !logged_in?
     redirect '/' if params[:id] != current_user.id.to_s
     @student = Student.find(session[:student_id])
-    @appointments = Appointment.where(student_id: session[:student_id]).order_by(tutor_id)
+    @appointments = Appointment.where(student_id: session[:student_id])
 
     erb :'/students/cancel'
   end
@@ -125,6 +125,8 @@ class StudentController < ApplicationController
 
     redirect "students/#{session[:student_id]}/view"
   end
+
+
 
 
 
