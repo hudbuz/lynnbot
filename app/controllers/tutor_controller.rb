@@ -20,7 +20,7 @@ class TutorController < ApplicationController
 
       elsif params[:name] == ""
         erb :'/tutors/new_tutor', locals: {message: "You must enter a name."}
-        binding.pry
+      
       elsif Tutor.all.find_by(username: params[:username])
         erb :'/students/new_student', locals: {message: "Username already taken."}
       else
