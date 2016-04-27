@@ -12,36 +12,16 @@
   <%= message %>
   <% end %><br>
 
-<form action="/tutors/<%@tutor.id%>/schedule" method="POST">
-<label>Monday: <br><input type="checkbox" name="monday[9:00]" value="true">  9:00am</input><br>
-               <input type="checkbox" name="monday[12:00]" value="true">  12:00pm</input><br>
-               <input type="checkbox" name="monday[2:00]" value="true">  2:00pm</input><br>
-               <input type="checkbox" name="monday[5:00]" value="true">  5:00pm</input><br>
-</label>
+<form action="/tutors/<%=@tutor.id%>/schedule" method="POST">
 
-<label>Tuesday: <br><input type="checkbox" name="tuesday[9:00]" value="true">  9:00am</input><br>
-               <input type="checkbox" name="tuesday[12:00]" value="true">  12:00pm</input><br>
-               <input type="checkbox" name="tuesday[2:00]" value="true">  2:00pm</input><br>
-               <input type="checkbox" name="tuesday[5:00]" value="true">  5:00pm</input><br>
-</label>
+<% @days.each do |day|%>
+<label><%= day.capitalize%>:<br>
+<% @times.each do |time|%>
+<input type="checkbox" name="schedule[<%= day %>][<%= time %>]" value="true"><%=time%></input><br>
+<%end%></label>
+<%end%>
 
-<label>Wednesday: <br><input type="checkbox" name="wednesday[9:00]" value="true">  9:00am</input><br>
-               <input type="checkbox" name="wednesday[12:00]" value="true">  12:00pm</input><br>
-               <input type="checkbox" name="wednesday[2:00]" value="true">  2:00pm</input><br>
-               <input type="checkbox" name="wednesday[5:00]" value="true">  5:00pm</input><br>
-</label>
 
-<label>Thursday: <br><input type="checkbox" name="thursday[9:00]" value="true">  9:00am</input><br>
-               <input type="checkbox" name="thursday[12:00]" value="true">  12:00pm</input><br>
-               <input type="checkbox" name="thursday[2:00]" value="true">  2:00pm</input><br>
-               <input type="checkbox" name="thursday[5:00]" value="true">  5:00pm</input><br>
-</label>
-
-<label>Friday: <br><input type="checkbox" name="friday[9:00]" value="true">  9:00am</input><br>
-               <input type="checkbox" name="friday[12:00]" value="true">  12:00pm</input><br>
-               <input type="checkbox" name="friday[2:00]" value="true">  2:00pm</input><br>
-               <input type="checkbox" name="friday[5:00]" value="true">  5:00pm</input><br>
-</label>
 <input type="submit" value="Create Schedule">
 </form>
 

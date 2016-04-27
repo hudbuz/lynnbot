@@ -12,40 +12,18 @@
   <% end %><br>
 
 
-  <h3>Warning: Updating availability will not cancel previously booked sessions.</h3>
+  <h3>Warning: Updating availability will not cancel previously booked appointments.</h3>
 
 
 <form action="/tutors/<%=@tutor.id%>/edit_schedule" method="POST">
       <input id="hidden" type="hidden" name="_method" value="PATCH">
-<label>Monday: <br><input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "monday", time: "9:00")%> name="edit[monday][9:00]" value="true">  9:00am</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "monday", time: "12:00")%> name="edit[monday][12:00]" value="true">  12:00pm</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "monday", time: "2:00")%> name="edit[monday][2:00]" value="true">  2:00pm</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "monday", time: "5:00")%> name="edit[monday][5:00]" value="true">  5:00pm</input><br>
-</label>
+<% @days.each do |day|%>
+<label><%= day.capitalize%>:<br>
+<% @times.each do |time|%>
+<input type="checkbox" name="edit[<%= day %>][<%= time %>]" value="true" <%='checked' if @tutor.availabilities.find_by(day: day, time: time)%> ><%=time%></input><br>
+<%end%></label>
+<%end%>
 
-<label>Tuesday: <br><input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "tuesday", time: "9:00")%> name="edit[tuesday][9:00]" value="true">  9:00am</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "tuesday", time: "12:00")%> name="edit[tuesday][12:00]" value="true">  12:00pm</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "tuesday", time: "2:00")%> name="edit[tuesday][2:00]" value="true">  2:00pm</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "tuesday", time: "5:00")%> name="edit[tuesday][5:00]" value="true">  5:00pm</input><br>
-</label>
-
-<label>Wednesday: <br><input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "wednesday", time: "9:00")%> name="edit[wednesday][9:00]" value="true">  9:00am</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "wednesday", time: "12:00")%> name="edit[wednesday][12:00]" value="true">  12:00pm</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "wednesday", time: "2:00")%> name="edit[wednesday][2:00]" value="true">  2:00pm</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "wednesday", time: "5:00")%> name="edit[wednesday][5:00]" value="true">  5:00pm</input><br>
-</label>
-
-<label>Thursday: <br><input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "thursday", time: "9:00")%> name="edit[thursday][9:00]" value="true">  9:00am</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "thursday", time: "12:00")%> name="edit[thursday][12:00]" value="true">  12:00pm</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "thursday", time: "2:00")%>name="edit[thursday][2:00]" value="true">  2:00pm</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "thursday", time: "5:00")%> name="edit[thursday][5:00]" value="true">  5:00pm</input><br>
-</label>
-
-<label>Friday: <br><input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "friday", time: "9:00")%> name="edit[friday][9:00]" value="true">  9:00am</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "friday", time: "12:00")%>name="edit[friday][12:00]" value="true">  12:00pm</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "friday", time: "2:00")%> name="edit[friday][2:00]" value="true">  2:00pm</input><br>
-               <input type="checkbox" <%='checked' if @tutor.availabilities.find_by(day: "friday", time: "5:00")%> name="edit[friday][5:00]" value="true">  5:00pm</input><br>
-</label>
 <input type="submit" value="Update Schedule">
 </form>
 

@@ -11,9 +11,9 @@
 
 
 
-<h2><%=@student.name.capitalize%>'s Booked Sessions</h2>
+<h2><%=@student.name.capitalize%>'s Booked Appointments</h2>
 
-<%= "You have no booked sessions" if @appointments.count == 0 %>
+<%= "You have no booked appointments" if @appointments.count == 0 %>
 
 <% @appointments.each do |x| %>
 <%= x.day.capitalize + " " + x.time + " - " + Tutor.find(x.tutor_id).name.capitalize %><br>
@@ -24,7 +24,7 @@
 
 
 <br><br><br><br>
-<a href="/students/<%=@student.id%>/book">Book Sessions</a>   <a href="/students/<%=@student.id%>/cancel">Cancel Session</a>  
+<a href="/students/<%=@student.id%>/book">Book Appointments</a>   <a href="/students/<%=@student.id%>/cancel">Cancel Appointments</a>  
 <a href="/logout">Logout</a>
 
 </body>

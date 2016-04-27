@@ -60,7 +60,8 @@ class TutorController < ApplicationController
     redirect '/' if !logged_in?
 
     @tutor = Tutor.find(session[:tutor_id])
-     @appointments = Appointment.where(tutor_id: session[:tutor_id])
+    @appointments = @tutor.appointments
+    @availabilities = @tutor.availabilities
     erb :'/tutors/view_schedule'
   end
 
@@ -68,6 +69,8 @@ class TutorController < ApplicationController
     redirect '/' if !logged_in?
     redirect '/' if params[:id] != current_user.id.to_s
     @tutor = Tutor.find(session[:tutor_id])
+    @days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+    @times = ["9:00", "12:00", "2:00", "5:00"]
     erb :'tutors/make_schedule' 
   end
 
@@ -81,9 +84,9 @@ class TutorController < ApplicationController
     else
       @tutor = Tutor.find(session[:tutor_id])
 
-
-      params.each do |key,value|
-        value.each do |time|
+      binding.pry
+      params[:schedule].each do |key,value|
+        value.each do |time,bool|
           Availability.create(day: key, time: time[0], tutor_id: session[:tutor_id])
         end
 
@@ -98,14 +101,20 @@ class TutorController < ApplicationController
     redirect '/' if params[:id] != current_user.id.to_s
    
     @tutor = Tutor.find(params[:id])
+    @days = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+    @times = ["9:00", "12:00", "2:00", "5:00"]
 
     erb :'/tutors/edit_schedule'
   end
 
   patch '/tutors/:id/edit_schedule' do 
+
+
     redirect '/' if !logged_in?
     redirect '/' if params[:id] != current_user.id.to_s
+
     @tutor = Tutor.find(params[:id])
+    binding.pry
 
     if params[:edit] == nil
       erb :"/tutors/edit_schedule", locals: {message: "You need to list at least 1 availability if you tryna work.  "}

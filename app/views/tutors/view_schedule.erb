@@ -7,11 +7,11 @@
 
 <h2><%=@tutor.name.capitalize%>'s Availability</h2>
 
-<%@tutor.availabilities.each do |x|%>
+<% @availabilities.each do |x|%>
 <%= x.day.capitalize + " " + x.time %><br>
 <%end%>
 
-<h2><%=@tutor.name.capitalize%>'s Booked Sessions</h2>
+<h2><%=@tutor.name.capitalize%>'s Booked Appointments</h2>
 <% @appointments.each do |x| %>
 <%= x.day.capitalize + " " + x.time + " - " + Student.find(x.student_id).name.capitalize %><br><br><br>
 <%end%>
